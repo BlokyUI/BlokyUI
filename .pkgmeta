@@ -1,0 +1,4 @@
+package-as: BlokyUI
+
+externals:
+  Libs/LibSharedMedia-3.0: https://repos.wowace.com/wow/libsharedmedia-3-0/trunk

@@ -1,0 +1,14 @@
+<Ui xmlns='http://www.blizzard.com/wow/ui/'>
+  <Script file='_Player.lua'/>
+  <Script file='_Pet.lua'/>
+  <Script file='_Target.lua'/>
+  <Script file='_TargetOfTarget.lua'/>
+  <Script file='_Buffs.lua'/>
+  <Script file='_Debuffs.lua'/>
+  <Script file='_Actionbars.lua'/>
+  <Script file="_OverrideFonts.lua"/>
+  <Script file="_PartyAndRaid.lua"/>
+  <Script file="_Tooltip.lua"/>
+  <Script file="_ClassFrames.lua"/>
+  <Script file="_Focus.lua"/>
+</Ui>

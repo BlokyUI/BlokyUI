@@ -1,0 +1,8 @@
+## Title: BlokyUI
+## Notes: Modern dark interface overhaul for World of Warcraft
+## Author: Bloky
+## Version: 0.1.1
+
+Libs\Load.xml
+BlokyUI.lua
+Modules\Load.xml
