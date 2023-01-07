@@ -2,6 +2,7 @@
 ## Notes: Modern dark interface overhaul for World of Warcraft
 ## Author: Bloky
 ## Version: 0.1.1
+## X-Curse-Project-ID: 794581
 
 Libs\Load.xml
 BlokyUI.lua
