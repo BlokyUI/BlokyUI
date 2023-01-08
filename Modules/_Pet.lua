@@ -1,10 +1,10 @@
 PetFrame:HookScript("OnEvent", function(self, event)
   if event == "UNIT_PET" or event == "UNIT_EXITED_VEHICLE" or event == "PET_UI_UPDATE" then
-    self:ClearAllPoints()
     if not InCombatLockdown() then
+      self:ClearAllPoints()
       self:SetPoint("BOTTOMLEFT", PlayerFrame, "BOTTOMLEFT", 24, -29)
+      self:SetSize(100, 40)
     end
-    self:SetSize(100, 40)
 
     self.portrait:Hide()
     PetFrameTexture:Hide()

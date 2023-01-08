@@ -1,4 +1,5 @@
 local function UpdateBar()
+  if InCombatLockdown() then return end
   PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual:Hide()
   PlayerFrame.PlayerFrameContainer:Hide()
   PlayerFrame.healthbar.HealthBarMask:Hide()
@@ -23,7 +24,9 @@ local function UpdateBar()
   local healthBarHeight = 38
   local manabarHeight = 10
   local totalFrameHeight = healthBarHeight + manabarHeight
-  PlayerFrame:SetSize(width + 45, totalFrameHeight * 2 - 7)
+  if not InCombatLockdown() then
+    PlayerFrame:SetSize(width + 45, totalFrameHeight * 2 - 7)
+  end
 
   -- health bar styling
   PlayerFrame.healthbar:SetSize(width, healthBarHeight)

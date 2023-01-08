@@ -61,6 +61,9 @@ function StyleAction(Bar, Num)
 end
 
 function StyleButton(Button, Type)
+  if Button:IsProtected() and InCombatLockdown() then
+    return
+  end
   local Name = Button:GetName()
   local NormalTexture = _G[Name .. "NormalTexture"]
   local Icon = _G[Name .. "Icon"]
@@ -116,29 +119,29 @@ function StyleButton(Button, Type)
 end
 
 function UpdateHotkeys(Button)
+  if Button:IsProtected() and InCombatLockdown() then
+    return
+  end
+
   local Name = Button:GetName()
   local HotKey = _G[Name .. "HotKey"]
   local Macro = _G[Name .. "Name"]
   local Count = _G[Name .. "Count"]
 
-  HotKey:SetFont(FONT, 12, "OUTLINE")
-  Macro:SetFont(FONT, 10, "OUTLINE")
   Count:SetFont(FONT, 12, "OUTLINE")
 
+  HotKey:SetFont(FONT, 12, "OUTLINE")
   HotKey:ClearAllPoints()
   HotKey:SetPoint("TOPRIGHT", Button, "TOPRIGHT", -Button:GetWidth() / 20, -Button:GetHeight() / 8)
+  HotKey:SetAlpha(1)
 
+  Macro:SetFont(FONT, 10, "OUTLINE")
   Macro:ClearAllPoints()
   Macro:SetPoint("BOTTOMLEFT", Button, "BOTTOMLEFT", 2, Button:GetHeight() / 8)
   Macro:SetPoint("BOTTOMRIGHT", Button, "BOTTOMRIGHT", 0, Button:GetHeight() / 8)
   Macro:SetWidth(Button:GetWidth() - 2)
   Macro:SetJustifyH("CENTER")
-
-  local HotKeyAlpha = 1
-  local MacroAlpha = 1
-
-  HotKey:SetAlpha(HotKeyAlpha)
-  Macro:SetAlpha(MacroAlpha)
+  Macro:SetAlpha(1)
 end
 
 EventFrame:SetScript("OnEvent", Init)

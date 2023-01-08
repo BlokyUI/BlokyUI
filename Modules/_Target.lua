@@ -24,7 +24,9 @@ local function handleTargetFrame(self, event)
   local healthBarHeight = 38
   local manabarHeight = 10
   local totalFrameHeight = healthBarHeight + manabarHeight
-  self:SetSize(width + 48, totalFrameHeight * 2 - 5)
+  if not InCombatLockdown() then
+    self:SetSize(width + 48, totalFrameHeight * 2 - 5)
+  end
 
   self.healthbar:ClearAllPoints();
   self.healthbar:SetPoint("TOPLEFT", self, "TOPLEFT", 24, -21.5)
