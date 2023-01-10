@@ -11,4 +11,5 @@
   <Script file="_Tooltip.lua"/>
   <Script file="_ClassFrames.lua"/>
   <Script file="_Focus.lua"/>
+  <Include file="Bags/Load.xml"/>
 </Ui>
