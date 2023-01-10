@@ -1,21 +1,28 @@
--- hide all of the class power bars, for now.
-PlayerFrame:HookScript("OnEvent", function(self, event)
-  if PlayerFrame.classPowerBar then
-    PlayerFrame.classPowerBar:Hide()
-  end
+local ClassFrames = BlokyUI:NewModule("ClassFrames")
 
-  if ComboPointDruidPlayerFrame then
-    ComboPointDruidPlayerFrame:Hide()
-  end
+function ClassFrames:OnEnable()
+  -- hide all of the class power bars, for now.
+  PlayerFrame:HookScript("OnEvent", function(self, event)
+    if PlayerFrame.classPowerBar then
+      PlayerFrame.classPowerBar:Hide()
+    end
 
-  if EssencePlayerFrame then
-    EssencePlayerFrame:Hide()
-  end
+    if ComboPointDruidPlayerFrame then
+      ComboPointDruidPlayerFrame:Hide()
+    end
 
-  if RuneFrame then
-    RuneFrame:Hide()
-  end
-end)
+    if EssencePlayerFrame then
+      EssencePlayerFrame:Hide()
+    end
+
+    if RuneFrame then
+      RuneFrame:Hide()
+    end
+  end)
+
+  TotemFrame.Show = function() end
+end
+
 -- local function UpdateRuneFrame()
 --   RuneFrame:ClearAllPoints()
 --   RuneFrame:SetPoint("BOTTOMRIGHT", PlayerFrame, "BOTTOMRIGHT", 100, 0)
@@ -32,7 +39,7 @@ end)
 --     --   end
 --     --   -- RuneFrame[key]:SetWidth(10)
 --     --   -- RuneFrameChild
---     --   -- child:SetStatusBarTexture(BUI.statusbarTexture)
+--     --   -- child:SetStatusBarTexture(BlokyUI.statusbarTexture)
 --   end
 -- end
 

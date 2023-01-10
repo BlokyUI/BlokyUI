@@ -1,16 +1,19 @@
-BlokyUI:SetScript("OnEvent", function(self, event, ...)
+local BlokyUIFrame = CreateFrame("Frame")
+BlokyUIFrame:RegisterEvent("ADDON_LOADED")
+
+BlokyUIFrame:SetScript("OnEvent", function(self, event, ...)
   if event ~= "ADDON_LOADED" then
     return
   end
 
   local ForcedFontSize = { 9, 9, 14, 14, 12, 64, 64 }
 
-  STANDARD_TEXT_FONT       = BUI.font
-  UNIT_NAME_FONT           = BUI.font
-  DAMAGE_TEXT_FONT         = BUI.font
-  NAMEPLATE_FONT           = BUI.font
-  NAMEPLATE_SPELLCAST_FONT = BUI.font
-  UNIT_NAME_FONT_ROMAN     = BUI.font
+  STANDARD_TEXT_FONT       = BlokyUI.font
+  UNIT_NAME_FONT           = BlokyUI.font
+  DAMAGE_TEXT_FONT         = BlokyUI.font
+  NAMEPLATE_FONT           = BlokyUI.font
+  NAMEPLATE_SPELLCAST_FONT = BlokyUI.font
+  UNIT_NAME_FONT_ROMAN     = BlokyUI.font
 
   local FontObjects = {
     SystemFont_NamePlateCastBar,
@@ -123,7 +126,7 @@ BlokyUI:SetScript("OnEvent", function(self, event, ...)
 
   for i, FontObject in pairs(FontObjects) do
     local _, size, style = FontObject:GetFont()
-    FontObject:SetFont(BUI.font, ForcedFontSize[i] or size, style)
+    FontObject:SetFont(BlokyUI.font, ForcedFontSize[i] or size, style)
     FontObject:SetSpacing(2.5)
   end
 end)
