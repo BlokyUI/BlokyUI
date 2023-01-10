@@ -86,6 +86,38 @@ function Player:OnEnable()
     PlayerFrame.name:SetTextColor(1.0, 1.0, 1.0, 1.0)
     PlayerFrame.name:SetShadowOffset(0, 0)
     PlayerFrame.name:SetFont(BlokyUI.font, 10, "OUTLINE")
+
+    -- style alternate mana frame
+    PlayerFrameAlternateManaBarBorder:Hide()
+    PlayerFrameAlternateManaBarRightBorder:Hide()
+    PlayerFrameAlternateManaBarLeftBorder:Hide()
+
+    PlayerFrameBottomManagedFramesContainer:ClearAllPoints()
+    PlayerFrameBottomManagedFramesContainer:SetPoint("BOTTOMRIGHT", PlayerFrameBackground, "BOTTOMRIGHT", 25.5, -34)
+
+    PlayerFrameAlternateManaBar:SetStatusBarTexture(BlokyUI.statusbarTexture)
+    PlayerFrameAlternateManaBar:SetHeight(24)
+
+    PlayerFrameAlternateManaBar.LeftText:SetFont(BlokyUI.font, 8, "OUTLINE")
+    PlayerFrameAlternateManaBar.LeftText:ClearAllPoints();
+    PlayerFrameAlternateManaBar.LeftText:SetJustifyH("LEFT")
+    PlayerFrameAlternateManaBar.LeftText:SetPoint("LEFT", PlayerFrameAlternateManaBar, "LEFT", 4, 0);
+
+    PlayerFrameAlternateManaBar.RightText:SetFont(BlokyUI.font, 8, "OUTLINE")
+    PlayerFrameAlternateManaBar.RightText:ClearAllPoints();
+    PlayerFrameAlternateManaBar.RightText:SetJustifyH("RIGHT")
+    PlayerFrameAlternateManaBar.RightText:SetPoint("RIGHT", PlayerFrameAlternateManaBar, "RIGHT", -4, 0);
+
+    if AlternateManaBarFrameBackground == nil then
+      CreateFrame("StatusBar", "AlternateManaBarFrameBackground", PlayerFrameAlternateManaBar)
+    end
+
+    AlternateManaBarFrameBackground:SetPoint("TOPLEFT", PlayerFrameAlternateManaBar, "TOPLEFT", -2.5, 2.5)
+    AlternateManaBarFrameBackground:SetWidth(PlayerFrameAlternateManaBar:GetWidth() + 5)
+    AlternateManaBarFrameBackground:SetHeight(PlayerFrameAlternateManaBar:GetHeight() + 5)
+    AlternateManaBarFrameBackground:SetStatusBarTexture(BlokyUI.statusbarTexture)
+    AlternateManaBarFrameBackground:SetStatusBarColor(0, 0, 0, 1)
+    AlternateManaBarFrameBackground:SetFrameLevel(0)
   end
 
   PlayerHitIndicator:SetText(nil)
