@@ -3,9 +3,9 @@ local ClassFrames = BlokyUI:NewModule("ClassFrames")
 function ClassFrames:OnEnable()
   -- hide all of the class power bars, for now.
   PlayerFrame:HookScript("OnEvent", function(self, event)
-    -- if PlayerFrame.classPowerBar then
-    --   PlayerFrame.classPowerBar:Hide()
-    -- end
+    if PlayerFrame.classPowerBar then
+      PlayerFrame.classPowerBar:Hide()
+    end
 
     if ComboPointDruidPlayerFrame then
       ComboPointDruidPlayerFrame:Hide()

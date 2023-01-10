@@ -70,9 +70,12 @@ function Player:OnEnable()
     PlayerFrame.manabar.RightText:SetJustifyH("RIGHT")
     PlayerFrame.manabar.RightText:SetPoint("RIGHT", PlayerFrame.manabar, "RIGHT", 0, -0.49);
     PlayerFrame.manabar.RightText:SetShadowOffset(0, 0)
-    local color = PowerBarColor[PlayerFrame.manabar.powerToken]
-    PlayerFrame.manabar:SetStatusBarColor(color.r, color.g, color.b)
-    PlayerFrame.manabar:GetStatusBarTexture():SetDrawLayer("BORDER")
+    local powerColor = GetPowerBarColor(PlayerFrame.manabar.powerType)
+    if PlayerFrame.manabar.powerType == 0 then
+      PlayerFrame.manabar:SetStatusBarColor(0, 0.5, 1)
+    else
+      PlayerFrame.manabar:SetStatusBarColor(powerColor.r, powerColor.g, powerColor.b)
+    end
 
 
     -- disable the mana bar animations
@@ -126,9 +129,20 @@ function Player:OnEnable()
   -- the mana bar texture resets sometimes, so this is needed to make sure the texture stays the same
   hooksecurefunc("UnitFrameManaBar_UpdateType", function(manabar)
     if manabar.unit ~= "player" then return end
-    local color = PowerBarColor[PlayerFrame.manabar.powerToken]
-    PlayerFrame.manabar:SetStatusBarColor(color.r, color.g, color.b)
-    PlayerFrame.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
+    local powerColor = GetPowerBarColor(PlayerFrame.manabar.powerType)
+    if PlayerFrame.manabar.powerType == 0 then
+      PlayerFrame.manabar:SetStatusBarColor(0, 0.5, 1)
+    else
+      PlayerFrame.manabar:SetStatusBarColor(powerColor.r, powerColor.g, powerColor.b)
+    end
+  end)
+
+  PlayerFrame:HookScript("OnEvent", function(self, event)
+    if event == "PORTRAITS_UPDATED" then
+      PlayerFrame.manabar:Show()
+      PlayerFrame.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
+      PlayerFrame.manabar.SetStatusBarTexture = function() end
+    end
   end)
 
   hooksecurefunc("PlayerFrame_Update", function()
