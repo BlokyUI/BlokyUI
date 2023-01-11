@@ -102,7 +102,6 @@ function Focus:OnEnable()
     -- self.TargetFrameContent.TargetFrameContentMain.ManaBar.FeedbackFrame:Hide()
     -- self.TargetFrameContent.TargetFrameContentMain.ManaBar.FullPowerFrame:Hide()
 
-    self.manabar:Show()
     self.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
     self.TargetFrameContent.TargetFrameContentMain.ManaBar.texture:SetTexture(BlokyUI.statusbarTexture)
     local powerColor = GetPowerBarColor(self.manabar.powerType)

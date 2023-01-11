@@ -12,4 +12,5 @@
   <Script file="_ClassFrames.lua"/>
   <Script file="_Focus.lua"/>
   <Include file="Bags/Load.xml"/>
+  <Include file="General/Load.xml"/>
 </Ui>

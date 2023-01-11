@@ -1,6 +1,6 @@
 local Module = BlokyUI:NewModule("Bags.Sell");
 
--- all credis due to the author of SUI
+-- all credits due to the author of SUI
 function Module:OnEnable()
   local g = CreateFrame("Frame")
   g:RegisterEvent("MERCHANT_SHOW")

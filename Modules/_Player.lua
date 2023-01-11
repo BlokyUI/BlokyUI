@@ -138,7 +138,7 @@ function Player:OnEnable()
   end)
 
   PlayerFrame:HookScript("OnEvent", function(self, event)
-    if event == "PORTRAITS_UPDATED" then
+    if event == "PORTRAITS_UPDATED" and not InCombatLockdown() then
       PlayerFrame.manabar:Show()
       PlayerFrame.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
       PlayerFrame.manabar.SetStatusBarTexture = function() end
@@ -151,5 +151,4 @@ function Player:OnEnable()
   hooksecurefunc("PlayerFrame_UpdateArt", function()
     UpdateBar()
   end)
-
 end

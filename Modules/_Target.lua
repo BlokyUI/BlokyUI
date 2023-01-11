@@ -90,7 +90,6 @@ function Target:OnEnable()
     self.manabar.RightText:SetPoint("RIGHT", self.manabar, "RIGHT", 0, -0.49);
     self.manabar.RightText:SetShadowOffset(0, 0)
 
-    self.manabar:Show()
     self.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
     self.TargetFrameContent.TargetFrameContentMain.ManaBar.texture:SetTexture(BlokyUI.statusbarTexture)
     local powerColor = GetPowerBarColor(self.manabar.powerType)

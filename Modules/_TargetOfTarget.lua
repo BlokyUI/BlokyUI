@@ -1,5 +1,6 @@
 local TargetOfTarget = BlokyUI:NewModule("TargetOfTarget")
 
+local healthTextureId
 function TargetOfTarget:OnEnable()
   local function handleToTFrame(self, type)
     self.FrameTexture:SetAlpha(0)
@@ -11,38 +12,45 @@ function TargetOfTarget:OnEnable()
     local manabarHeight = 4
     local totalFrameHeight = healthBarHeight + manabarHeight
 
-    self.healthbar:SetWidth(width)
-    self.healthbar:SetHeight(healthBarHeight)
+    self.healthbar:SetSize(width, healthBarHeight)
 
-    self.healthbar:SetStatusBarTexture(BlokyUI.statusbarTexture)
-    local r, g, b = BlokyUI.getUnitColor(self.unit)
-    self.healthbar:SetStatusBarColor(r, g, b)
-    self.healthbar:ClearAllPoints()
-    self.healthbar:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 0)
+    if self.healthbar:GetStatusBarTexture():GetTexture() ~= healthTextureId then
+      self.healthbar:SetStatusBarTexture(BlokyUI.statusbarTexture)
+      healthTextureId = self.healthbar:GetStatusBarTexture():GetTexture()
+      self.healthbar:ClearAllPoints()
+      self.healthbar:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 0)
+      self.healthbar:SetFrameLevel(1)
+      if self.HealthBar.HealthBarMask:IsShown() then
+        self.HealthBar.HealthBarMask:Hide()
+      end
+      if self.ManaBar.ManaBarMask:IsShown() then
+        self.ManaBar.ManaBarMask:Hide()
+      end
 
-    self.HealthBar.HealthBarMask:Hide()
-    self.ManaBar.ManaBarMask:Hide()
+      local backgroundKey = type .. "ToTFrameBackground"
 
+      if _G[backgroundKey] == nil then
+        CreateFrame("StatusBar", backgroundKey, self)
+      end
 
-    local backgroundKey = type .. "ToTFrameBackground"
+      local borderSize = 2
+      -- -- Set the size and position of the frame
+      _G[backgroundKey]:SetPoint("TOPLEFT", self, "TOPLEFT", -2, 2.5)
+      _G[backgroundKey]:SetWidth(width + borderSize * 2)
+      _G[backgroundKey]:SetHeight(totalFrameHeight + 5)
+      _G[backgroundKey]:SetStatusBarTexture(BlokyUI.statusbarTexture)
+      _G[backgroundKey]:SetStatusBarColor(0, 0, 0, 1)
+      _G[backgroundKey]:SetFrameLevel(0)
 
-    if _G[backgroundKey] == nil then
-      CreateFrame("StatusBar", backgroundKey, self)
+      self.manabar:SetSize(width, manabarHeight)
+      self.manabar:ClearAllPoints()
+      self.manabar:SetPoint("TOPLEFT", self.healthbar, "BOTTOMLEFT", 0, 0)
     end
 
-    local borderSize = 2
-    -- -- Set the size and position of the frame
-    _G[backgroundKey]:SetPoint("TOPLEFT", self, "TOPLEFT", -2, 2.5)
-    _G[backgroundKey]:SetWidth(width + borderSize * 2)
-    _G[backgroundKey]:SetHeight(totalFrameHeight + 5)
-    _G[backgroundKey]:SetStatusBarTexture(BlokyUI.statusbarTexture)
-    _G[backgroundKey]:SetStatusBarColor(0, 0, 0, 1)
-    _G[backgroundKey]:SetFrameLevel(0)
-
-    self.manabar:SetSize(width, manabarHeight)
-    self.manabar:ClearAllPoints()
-    self.manabar:SetPoint("TOPLEFT", self.healthbar, "BOTTOMLEFT", 0, 0)
     self.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
+
+    local r, g, b = BlokyUI.getUnitColor(self.unit)
+    self.healthbar:SetStatusBarColor(r, g, b)
 
     local powerColor = GetPowerBarColor(self.manabar.powerType)
     if self.manabar.powerType == 0 then
@@ -50,8 +58,6 @@ function TargetOfTarget:OnEnable()
     else
       self.manabar:SetStatusBarColor(powerColor.r, powerColor.g, powerColor.b)
     end
-    self.healthbar:SetFrameLevel(1)
-
 
     self.name:ClearAllPoints()
     self.name:SetPoint("LEFT", self.healthbar, "LEFT", 4, 0.5);
