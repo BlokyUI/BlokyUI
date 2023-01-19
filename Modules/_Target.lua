@@ -2,7 +2,8 @@ local Target = BlokyUI:NewModule("Target")
 
 function Target:OnEnable()
   TargetFrame:HookScript("OnEvent", function(self, event)
-    if event ~= "PLAYER_ENTERING_WORLD" and event ~= "PLAYER_TARGET_CHANGED" and event ~= "PARTY_MEMBERS_CHANGED" then return end
+    if event ~= "PLAYER_ENTERING_WORLD" and event ~= "PLAYER_TARGET_CHANGED" and event ~= "PARTY_MEMBERS_CHANGED" and
+        event ~= 'PORTRAITS_UPDATED' and event ~= "UNIT_TARGETABLE_CHANGED" then return end
 
     self.name:ClearAllPoints()
     self.name:SetFont(BlokyUI.font, 10, "OUTLINE")
@@ -36,10 +37,7 @@ function Target:OnEnable()
     self.healthbar:ClearAllPoints();
     self.healthbar:SetPoint("TOPLEFT", self, "TOPLEFT", 24, -21.5)
 
-    --   -- health bar styling
-    -- self.healthbar:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 0)
-    -- self.TargetFrameContent:ClearAllPoints()
-    -- self.TargetFrameContent:SetPoint("TOPLEFT", self, "TOPLEFT", 40, 0)
+    -- health bar styling
     self.healthbar:SetSize(width, healthBarHeight)
     self.healthbar.HealthBarMask:SetSize(width, healthBarHeight)
     self.healthbar:SetStatusBarTexture(BlokyUI.statusbarTexture)
@@ -81,6 +79,7 @@ function Target:OnEnable()
     self.manabar:ClearAllPoints()
     self.manabar:SetPoint("TOPLEFT", self.healthbar, "BOTTOMLEFT", 0, 0)
     self.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
+
     self.manabar.LeftText:SetFont(BlokyUI.font, 8, "OUTLINE")
     self.manabar.LeftText:SetJustifyH("LEFT")
     self.manabar.LeftText:SetPoint("LEFT", self.manabar, "LEFT", 1, -0.49);

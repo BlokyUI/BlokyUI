@@ -13,4 +13,5 @@
   <Script file="_Focus.lua"/>
   <Include file="Bags/Load.xml"/>
   <Include file="General/Load.xml"/>
+  <Include file="Chat/Load.xml"/>
 </Ui>

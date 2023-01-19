@@ -1,4 +1,5 @@
-BlokyUI = LibStub("AceAddon-3.0"):NewAddon("BlokyUI", "AceEvent-3.0")
+BlokyUI = LibStub("AceAddon-3.0"):NewAddon("BlokyUI", "AceEvent-3.0", "AceHook-3.0")
+
 function BlokyUI:OnInitialize()
   local LSM = LibStub("LibSharedMedia-3.0")
   LSM:Register("font", "BlokyUIBold", [[Interface\AddOns\BlokyUI\Media\Fonts\Inter-Bold.ttf]])

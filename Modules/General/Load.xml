@@ -1,3 +1,5 @@
 <Ui xmlns='http://www.blizzard.com/wow/ui/'>
   <Script file='_Stats.lua'/>
+  <Script file='_Repair.lua'/>
+  <Script file='_HideQuests.lua'/>
 </Ui>

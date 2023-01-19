@@ -12,7 +12,9 @@ function TargetOfTarget:OnEnable()
     local manabarHeight = 4
     local totalFrameHeight = healthBarHeight + manabarHeight
 
-    self.healthbar:SetSize(width, healthBarHeight)
+    if not InCombatLockdown() then
+      self.healthbar:SetSize(width, healthBarHeight)
+    end
 
     if self.healthbar:GetStatusBarTexture():GetTexture() ~= healthTextureId then
       self.healthbar:SetStatusBarTexture(BlokyUI.statusbarTexture)
@@ -48,7 +50,6 @@ function TargetOfTarget:OnEnable()
     end
 
     self.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
-
     local r, g, b = BlokyUI.getUnitColor(self.unit)
     self.healthbar:SetStatusBarColor(r, g, b)
 
@@ -66,7 +67,11 @@ function TargetOfTarget:OnEnable()
     self.name:SetFont(BlokyUI.font, 8, "OUTLINE")
   end
 
-  hooksecurefunc(TargetFrameToT, "Update", function(self)
+  TargetFrameToT:HookScript("OnShow", function(self)
+    handleToTFrame(self, "Target")
+  end)
+
+  hooksecurefunc(TargetFrameToT, "Update", function(self, event)
     handleToTFrame(self, "Target")
   end)
 

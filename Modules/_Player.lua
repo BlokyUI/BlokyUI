@@ -59,6 +59,14 @@ function Player:OnEnable()
     PlayerFrame.healthbar.RightText:SetJustifyH("CENTER")
     PlayerFrame.healthbar.RightText:SetFont(BlokyUI.font, 10, "OUTLINE")
 
+    -- when character panel is open
+    PlayerFrame.healthbar.TextString:ClearAllPoints();
+    PlayerFrame.healthbar.TextString:SetPoint("RIGHT", PlayerFrame.healthbar, "RIGHT", -4, 0);
+    PlayerFrame.healthbar.TextString:SetJustifyH("RIGHT")
+    PlayerFrame.manabar.TextString:ClearAllPoints();
+    PlayerFrame.manabar.TextString:SetPoint("RIGHT", PlayerFrame.manabar, "RIGHT", 0, -0.49);
+    PlayerFrame.manabar.TextString:SetJustifyH("RIGHT")
+    PlayerFrame.manabar.TextString:SetFont(BlokyUI.font, 8, "OUTLINE")
 
     -- manabar styling
     PlayerFrame.manabar:SetSize(width, manabarHeight)
@@ -66,10 +74,19 @@ function Player:OnEnable()
     PlayerFrame.manabar:ClearAllPoints()
     PlayerFrame.manabar:SetPoint("TOPLEFT", PlayerFrame.healthbar, "BOTTOMLEFT", 0, 0)
     PlayerFrame.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
-    PlayerFrame.manabar.RightText:SetFont(BlokyUI.font, 8, "OUTLINE")
-    PlayerFrame.manabar.RightText:SetJustifyH("RIGHT")
-    PlayerFrame.manabar.RightText:SetPoint("RIGHT", PlayerFrame.manabar, "RIGHT", 0, -0.49);
-    PlayerFrame.manabar.RightText:SetShadowOffset(0, 0)
+    if PlayerFrame.manabar.RightText then
+      PlayerFrame.manabar.RightText:SetFont(BlokyUI.font, 8, "OUTLINE")
+      PlayerFrame.manabar.RightText:SetJustifyH("RIGHT")
+      PlayerFrame.manabar.RightText:SetPoint("RIGHT", PlayerFrame.manabar, "RIGHT", 0, -0.49);
+      PlayerFrame.manabar.RightText:SetShadowOffset(0, 0)
+    end
+    if PlayerFrame.manabar.LeftText then
+      PlayerFrame.manabar.LeftText:SetFont(BlokyUI.font, 8, "OUTLINE")
+      PlayerFrame.manabar.LeftText:SetJustifyH("LEFT")
+      PlayerFrame.manabar.LeftText:SetPoint("LEFT", PlayerFrame.manabar, "LEFT", 1, -0.49);
+      PlayerFrame.manabar.LeftText:SetShadowOffset(0, 0)
+    end
+
     local powerColor = GetPowerBarColor(PlayerFrame.manabar.powerType)
     if PlayerFrame.manabar.powerType == 0 then
       PlayerFrame.manabar:SetStatusBarColor(0, 0.5, 1)
@@ -125,6 +142,8 @@ function Player:OnEnable()
 
   PlayerHitIndicator:SetText(nil)
   PlayerHitIndicator.SetText = function() end
+
+
 
   -- the mana bar texture resets sometimes, so this is needed to make sure the texture stays the same
   hooksecurefunc("UnitFrameManaBar_UpdateType", function(manabar)
