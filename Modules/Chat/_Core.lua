@@ -204,7 +204,6 @@ function Module:OnEnable()
 	BNToastFrame:ClearAllPoints();
 	BNToastFrame:SetPoint("TOPLEFT", ChatFrame1, "TOPLEFT", 0, 120);
 	BNToastFrame:HookScript("OnEvent", function(self, event, ...)
-		print(event)
 		QuickJoinToastButton:ClearAllPoints();
 		QuickJoinToastButton:SetPoint("TOPLEFT", ChatFrame1, "TOPLEFT", 0, 60);
 	end);
