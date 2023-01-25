@@ -1,20 +1,22 @@
-local TargetOfTarget = BlokyUI:NewModule("TargetOfTarget")
+local TargetOfTarget = BlokyUI:NewModule("TargetOfTarget", "AceHook-3.0")
 
 local healthTextureId
+local manaTextureId
 function TargetOfTarget:OnEnable()
   local function handleToTFrame(self, type)
-    self.FrameTexture:SetAlpha(0)
-    self.FrameTexture:Hide()
-    self.portrait:Hide()
+    if not self:IsShown() then
+      return
+    end
 
     local width = 84
     local healthBarHeight = 20
     local manabarHeight = 4
     local totalFrameHeight = healthBarHeight + manabarHeight
 
-    if not InCombatLockdown() then
-      self.healthbar:SetSize(width, healthBarHeight)
-    end
+    self.FrameTexture:SetAlpha(0)
+    self.FrameTexture:Hide()
+    self.portrait:Hide()
+    self.healthbar:SetSize(width, healthBarHeight)
 
     if self.healthbar:GetStatusBarTexture():GetTexture() ~= healthTextureId then
       self.healthbar:SetStatusBarTexture(BlokyUI.statusbarTexture)
@@ -43,21 +45,26 @@ function TargetOfTarget:OnEnable()
       _G[backgroundKey]:SetStatusBarTexture(BlokyUI.statusbarTexture)
       _G[backgroundKey]:SetStatusBarColor(0, 0, 0, 1)
       _G[backgroundKey]:SetFrameLevel(0)
+    end
+
+    if self.manabar:GetStatusBarTexture():GetTexture() ~= manaTextureId then
+      self.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
+      manaTextureId = self.manabar:GetStatusBarTexture():GetTexture()
+
+      self.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
+      local r, g, b = BlokyUI.getUnitColor(self.unit)
+      self.healthbar:SetStatusBarColor(r, g, b)
 
       self.manabar:SetSize(width, manabarHeight)
       self.manabar:ClearAllPoints()
       self.manabar:SetPoint("TOPLEFT", self.healthbar, "BOTTOMLEFT", 0, 0)
-    end
 
-    self.manabar:SetStatusBarTexture(BlokyUI.statusbarTexture)
-    local r, g, b = BlokyUI.getUnitColor(self.unit)
-    self.healthbar:SetStatusBarColor(r, g, b)
-
-    local powerColor = GetPowerBarColor(self.manabar.powerType)
-    if self.manabar.powerType == 0 then
-      self.manabar:SetStatusBarColor(0, 0.5, 1)
-    else
-      self.manabar:SetStatusBarColor(powerColor.r, powerColor.g, powerColor.b)
+      local powerColor = GetPowerBarColor(self.manabar.powerType)
+      if self.manabar.powerType == 0 then
+        self.manabar:SetStatusBarColor(0, 0.5, 1)
+      else
+        self.manabar:SetStatusBarColor(powerColor.r, powerColor.g, powerColor.b)
+      end
     end
 
     self.name:ClearAllPoints()
@@ -66,10 +73,6 @@ function TargetOfTarget:OnEnable()
     self.name:SetShadowOffset(0, 0)
     self.name:SetFont(BlokyUI.font, 8, "OUTLINE")
   end
-
-  TargetFrameToT:HookScript("OnShow", function(self)
-    handleToTFrame(self, "Target")
-  end)
 
   hooksecurefunc(TargetFrameToT, "Update", function(self, event)
     handleToTFrame(self, "Target")

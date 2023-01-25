@@ -11,13 +11,13 @@ function Debuffs:OnEnable()
 
   local function UpdateDuration(self, timeLeft)
     if timeLeft >= 86400 then
-      self.duration:SetFormattedText("%dd", ceil(timeLeft / 86400))
+      self.Duration:SetFormattedText("%dd", ceil(timeLeft / 86400))
     elseif timeLeft >= 3600 then
-      self.duration:SetFormattedText("%dh", ceil(timeLeft / 3600))
+      self.Duration:SetFormattedText("%dh", ceil(timeLeft / 3600))
     elseif timeLeft >= 60 then
-      self.duration:SetFormattedText("%dm", ceil(timeLeft / 60))
+      self.Duration:SetFormattedText("%dm", ceil(timeLeft / 60))
     else
-      self.duration:SetFormattedText("%ds", timeLeft)
+      self.Duration:SetFormattedText("%ds", timeLeft)
     end
   end
 
@@ -53,8 +53,8 @@ function Debuffs:OnEnable()
     for index, child in pairs(Children) do
       local frame = select(index, DebuffFrame.AuraContainer:GetChildren())
       local icon = frame.Icon
-      local duration = frame.duration
-      local count = frame.count
+      local duration = frame.Duration
+      local count = frame.Count
 
       if child.Border then
         child.Border:Hide()
@@ -128,5 +128,6 @@ function Debuffs:OnEnable()
     UpdateDebuffs()
   end)
 
-  hooksecurefunc(DebuffButtonMixin, "UpdateDuration", UpdateDuration)
+  hooksecurefunc(AuraButtonMixin, "UpdateDuration", UpdateDuration)
+  -- hooksecurefunc(DebuffButtonMixin, "UpdateDuration", UpdateDuration)
 end

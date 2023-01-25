@@ -3,13 +3,13 @@ local Buffs = BlokyUI:NewModule("Buffs")
 function Buffs:OnEnable()
   local function UpdateDuration(self, timeLeft)
     if timeLeft >= 86400 then
-      self.duration:SetFormattedText("%dd", ceil(timeLeft / 86400))
+      self.Duration:SetFormattedText("%dd", ceil(timeLeft / 86400))
     elseif timeLeft >= 3600 then
-      self.duration:SetFormattedText("%dh", ceil(timeLeft / 3600))
+      self.Duration:SetFormattedText("%dh", ceil(timeLeft / 3600))
     elseif timeLeft >= 60 then
-      self.duration:SetFormattedText("%dm", ceil(timeLeft / 60))
+      self.Duration:SetFormattedText("%dm", ceil(timeLeft / 60))
     else
-      self.duration:SetFormattedText("%ds", timeLeft)
+      self.Duration:SetFormattedText("%ds", timeLeft)
     end
   end
 
@@ -45,8 +45,8 @@ function Buffs:OnEnable()
     for index, child in pairs(Children) do
       local frame = select(index, BuffFrame.AuraContainer:GetChildren())
       local icon = frame.Icon
-      local duration = frame.duration
-      local count = frame.count
+      local duration = frame.Duration
+      local count = frame.Count
 
       icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
@@ -111,10 +111,10 @@ function Buffs:OnEnable()
     BuffFrame.CollapseAndExpandButton:Hide()
   end)
 
-  hooksecurefunc(C_EditMode, "OnEditModeExit", function()
-    BuffFrame.CollapseAndExpandButton:Hide()
-  end)
+  -- hooksecurefunc(C_EditMode, "OnEditModeExit", function()
+  --   BuffFrame.CollapseAndExpandButton:Hide()
+  -- end)
 
-  hooksecurefunc(BuffButtonMixin, "UpdateDuration", UpdateDuration)
-  hooksecurefunc(TempEnchantButtonMixin, "UpdateDuration", UpdateDuration)
+  hooksecurefunc(AuraButtonMixin, "UpdateDuration", UpdateDuration)
+  -- hooksecurefunc(TempEnchantButtonMixin, "UpdateDuration", UpdateDuration)
 end

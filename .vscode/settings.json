@@ -166,6 +166,7 @@
     "ACCEPT",
     "GameFontDisableSmall",
     "GameFontNormalSmall",
-    "FONT_COLOR_CODE_CLOSE"
+    "FONT_COLOR_CODE_CLOSE",
+    "AuraButtonMixin"
   ]
 }
