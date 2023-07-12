@@ -13,44 +13,15 @@ function Buffs:OnEnable()
     end
   end
 
-  local function ButtonDefault(button)
-    local border = CreateFrame("Frame", nil, button)
-    border:SetSize(button.Icon:GetWidth() + 4, button.Icon:GetHeight() + 4)
-    border:SetFrameLevel(0)
-    if BuffFrame.AuraContainer.isHorizontal then
-      if BuffFrame.AuraContainer.addIconsToTop then
-        border:SetPoint("CENTER", button, "CENTER", 0, -5)
-      else
-        border:SetPoint("CENTER", button, "CENTER", 0, 5)
-      end
-    elseif not BuffFrame.AuraContainer.isHorizontal then
-      if not BuffFrame.AuraContainer.addIconsToRight then
-        border:SetPoint("CENTER", button, "CENTER", 15, 0)
-      else
-        border:SetPoint("CENTER", button, "CENTER", -15, 0)
-      end
-    end
-
-    border.texture = border:CreateTexture()
-    border.texture:SetAllPoints()
-    border.texture:SetColorTexture(0, 0, 0, 1)
-    border.texture:SetDrawLayer("BACKGROUND", -7)
-
-    button.customBorder = border
-  end
-
   function UpdateBuffs()
     local Children = { BuffFrame.AuraContainer:GetChildren() }
 
     for index, child in pairs(Children) do
       local frame = select(index, BuffFrame.AuraContainer:GetChildren())
-      local icon = frame.Icon
       local duration = frame.Duration
       local count = frame.Count
 
-      icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-
-      if frame.Border then frame.Border:Hide() end
+      -- if frame.TempEnchantBorder then frame.TempEnchantBorder:Hide() end
 
       -- Set Stack Font size and reposition it
       if count then
@@ -60,7 +31,7 @@ function Buffs:OnEnable()
           if BuffFrame.AuraContainer.addIconsToTop then
             count:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 0, -12)
           else
-            count:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 0, -2)
+            count:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -1, -5)
           end
         elseif not BuffFrame.AuraContainer.isHorizontal then
           if not BuffFrame.AuraContainer.addIconsToRight then
@@ -78,7 +49,7 @@ function Buffs:OnEnable()
         if BuffFrame.AuraContainer.addIconsToTop then
           duration:SetPoint("CENTER", frame, "BOTTOM", 0, 5)
         else
-          duration:SetPoint("CENTER", frame, "BOTTOM", 0, 15)
+          duration:SetPoint("CENTER", frame, "BOTTOM", 0, 8)
         end
       elseif not BuffFrame.AuraContainer.isHorizontal then
         if not BuffFrame.AuraContainer.addIconsToRight then
@@ -90,9 +61,8 @@ function Buffs:OnEnable()
 
       duration:SetDrawLayer("OVERLAY")
 
-      if frame.customBorder == nil then
-        ButtonDefault(frame)
-      end
+      frame:SetSize(32, 32)
+      BlokyUI.msq:AddButton(frame)
     end
   end
 
@@ -103,6 +73,10 @@ function Buffs:OnEnable()
   frame:RegisterEvent("GROUP_ROSTER_UPDATE")
   frame:SetScript("OnEvent", UpdateBuffs)
 
+  hooksecurefunc(AuraFrameMixin, "Update", function(self)
+    UpdateBuffs()
+  end)
+
   -- Collapse Button
   local hideCollapse = CreateFrame("Frame")
   hideCollapse:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -111,10 +85,8 @@ function Buffs:OnEnable()
     BuffFrame.CollapseAndExpandButton:Hide()
   end)
 
-  -- hooksecurefunc(C_EditMode, "OnEditModeExit", function()
-  --   BuffFrame.CollapseAndExpandButton:Hide()
-  -- end)
-
-  hooksecurefunc(AuraButtonMixin, "UpdateDuration", UpdateDuration)
-  -- hooksecurefunc(TempEnchantButtonMixin, "UpdateDuration", UpdateDuration)
+  hooksecurefunc(C_EditMode, "OnEditModeExit", function()
+    BuffFrame.CollapseAndExpandButton:Hide()
+    UpdateBuffs()
+  end)
 end

@@ -167,6 +167,15 @@
     "GameFontDisableSmall",
     "GameFontNormalSmall",
     "FONT_COLOR_CODE_CLOSE",
-    "AuraButtonMixin"
+    "AuraButtonMixin",
+    "STANDARD_TEXT_FONT",
+    "SlashCmdList",
+    "ContainerFrame_GetContainerNumSlots",
+    "SELECTED_CHAT_FRAME",
+    "DEFAULT_CHAT_FRAME",
+    "InterfaceOptionsFrame_OpenToCategory",
+    "SettingsPanel",
+    "ReloadUI",
+    "AuraFrameMixin"
   ]
 }

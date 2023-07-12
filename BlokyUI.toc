@@ -1,8 +1,9 @@
-## Interface: 100005
+## Interface: 100015
 ## Title: BlokyUI
 ## Notes: Modern dark interface overhaul for World of Warcraft
 ## Author: Bloky
-## Version: 0.5.0
+## Version: 0.6.0
+## RequiredDeps: Masque
 ## X-Curse-Project-ID: 794581
 
 Libs\Load.xml

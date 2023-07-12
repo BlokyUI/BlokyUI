@@ -108,33 +108,45 @@ function Player:OnEnable()
     PlayerFrame.name:SetFont(BlokyUI.font, 10, "OUTLINE")
 
     -- style alternate mana frame
-    PlayerFrameAlternateManaBarBorder:Hide()
-    PlayerFrameAlternateManaBarRightBorder:Hide()
-    PlayerFrameAlternateManaBarLeftBorder:Hide()
+    -- PlayerFrameAlternateManaBarBorder:Hide()
+    -- PlayerFrameAlternateManaBarRightBorder:Hide()
+    -- PlayerFrameAlternateManaBarLeftBorder:Hide()
 
     PlayerFrameBottomManagedFramesContainer:ClearAllPoints()
     PlayerFrameBottomManagedFramesContainer:SetPoint("BOTTOMRIGHT", PlayerFrameBackground, "BOTTOMRIGHT", 25.5, -34)
 
-    PlayerFrameAlternateManaBar:SetStatusBarTexture(BlokyUI.statusbarTexture)
-    PlayerFrameAlternateManaBar:SetHeight(24)
+    AlternatePowerBar.PowerBarMask:Hide()
 
-    PlayerFrameAlternateManaBar.LeftText:SetFont(BlokyUI.font, 8, "OUTLINE")
-    PlayerFrameAlternateManaBar.LeftText:ClearAllPoints();
-    PlayerFrameAlternateManaBar.LeftText:SetJustifyH("LEFT")
-    PlayerFrameAlternateManaBar.LeftText:SetPoint("LEFT", PlayerFrameAlternateManaBar, "LEFT", 4, 0);
+    AlternatePowerBar:ClearAllPoints()
+    AlternatePowerBar:SetWidth(100)
+    AlternatePowerBar:SetPoint("BOTTOMRIGHT", PlayerFrameBackground, "BOTTOMRIGHT", -2, -30)
+    AlternatePowerBar:SetStatusBarTexture(BlokyUI.statusbarTexture)
+    AlternatePowerBar:SetHeight(20)
 
-    PlayerFrameAlternateManaBar.RightText:SetFont(BlokyUI.font, 8, "OUTLINE")
-    PlayerFrameAlternateManaBar.RightText:ClearAllPoints();
-    PlayerFrameAlternateManaBar.RightText:SetJustifyH("RIGHT")
-    PlayerFrameAlternateManaBar.RightText:SetPoint("RIGHT", PlayerFrameAlternateManaBar, "RIGHT", -4, 0);
+    -- local powerColor = GetPowerBarColor(PlayerFrame.manabar.powerType)
+    -- if PlayerFrame.manabar.powerType == 0 then
+      AlternatePowerBar:SetStatusBarColor(0, 0.5, 1)
+    -- else
+    --   AlternatePowerBar:SetStatusBarColor(powerColor.r, powerColor.g, powerColor.b)
+    -- end
+
+    AlternatePowerBar.LeftText:SetFont(BlokyUI.font, 8, "OUTLINE")
+    AlternatePowerBar.LeftText:ClearAllPoints();
+    AlternatePowerBar.LeftText:SetJustifyH("LEFT")
+    AlternatePowerBar.LeftText:SetPoint("LEFT", AlternatePowerBar, "LEFT", 4, 0);
+
+    AlternatePowerBar.RightText:SetFont(BlokyUI.font, 8, "OUTLINE")
+    AlternatePowerBar.RightText:ClearAllPoints();
+    AlternatePowerBar.RightText:SetJustifyH("RIGHT")
+    AlternatePowerBar.RightText:SetPoint("RIGHT", AlternatePowerBar, "RIGHT", -4, 0);
 
     if AlternateManaBarFrameBackground == nil then
-      CreateFrame("StatusBar", "AlternateManaBarFrameBackground", PlayerFrameAlternateManaBar)
+      CreateFrame("StatusBar", "AlternateManaBarFrameBackground", AlternatePowerBar)
     end
 
-    AlternateManaBarFrameBackground:SetPoint("TOPLEFT", PlayerFrameAlternateManaBar, "TOPLEFT", -2.5, 2.5)
-    AlternateManaBarFrameBackground:SetWidth(PlayerFrameAlternateManaBar:GetWidth() + 5)
-    AlternateManaBarFrameBackground:SetHeight(PlayerFrameAlternateManaBar:GetHeight() + 5)
+    AlternateManaBarFrameBackground:SetPoint("TOPLEFT", AlternatePowerBar, "TOPLEFT", -2.5, 2.5)
+    AlternateManaBarFrameBackground:SetWidth(AlternatePowerBar:GetWidth() + 5)
+    AlternateManaBarFrameBackground:SetHeight(AlternatePowerBar:GetHeight() + 5)
     AlternateManaBarFrameBackground:SetStatusBarTexture(BlokyUI.statusbarTexture)
     AlternateManaBarFrameBackground:SetStatusBarColor(0, 0, 0, 1)
     AlternateManaBarFrameBackground:SetFrameLevel(0)

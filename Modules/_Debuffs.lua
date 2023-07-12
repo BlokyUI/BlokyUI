@@ -1,14 +1,6 @@
 local Debuffs = BlokyUI:NewModule("Debuffs")
 
 function Debuffs:OnEnable()
-  -- DebuffType Colors for the Debuff Border
-  local DebuffColor      = {}
-  DebuffColor["none"]    = { r = 0.80, g = 0, b = 0 };
-  DebuffColor["Magic"]   = { r = 0.20, g = 0.60, b = 1.00 };
-  DebuffColor["Curse"]   = { r = 0.60, g = 0.00, b = 1.00 };
-  DebuffColor["Disease"] = { r = 0.60, g = 0.40, b = 0 };
-  DebuffColor["Poison"]  = { r = 0.00, g = 0.60, b = 0 };
-
   local function UpdateDuration(self, timeLeft)
     if timeLeft >= 86400 then
       self.Duration:SetFormattedText("%dd", ceil(timeLeft / 86400))
@@ -19,32 +11,6 @@ function Debuffs:OnEnable()
     else
       self.Duration:SetFormattedText("%ds", timeLeft)
     end
-  end
-
-  local function ButtonDefault(button)
-    local border = CreateFrame("Frame", nil, button)
-    border:SetSize(button.Icon:GetWidth() + 4, button.Icon:GetHeight() + 4)
-    border:SetFrameLevel(0)
-    if BuffFrame.AuraContainer.isHorizontal then
-      if BuffFrame.AuraContainer.addIconsToTop then
-        border:SetPoint("CENTER", button, "CENTER", 0, -5)
-      else
-        border:SetPoint("CENTER", button, "CENTER", 0, 5)
-      end
-    elseif not BuffFrame.AuraContainer.isHorizontal then
-      if not BuffFrame.AuraContainer.addIconsToRight then
-        border:SetPoint("CENTER", button, "CENTER", 15, 0)
-      else
-        border:SetPoint("CENTER", button, "CENTER", -15, 0)
-      end
-    end
-
-    border.texture = border:CreateTexture()
-    border.texture:SetAllPoints()
-    border.texture:SetColorTexture(0, 0, 0, 1)
-    border.texture:SetDrawLayer("BACKGROUND", -7)
-
-    button.customBorder = border
   end
 
   function UpdateDebuffs()
@@ -70,7 +36,7 @@ function Debuffs:OnEnable()
           if DebuffFrame.AuraContainer.addIconsToTop then
             count:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 0, -12)
           else
-            count:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 0, -2)
+            count:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -1, -5)
           end
         elseif not DebuffFrame.AuraContainer.isHorizontal then
           if not DebuffFrame.AuraContainer.addIconsToRight then
@@ -88,7 +54,7 @@ function Debuffs:OnEnable()
         if DebuffFrame.AuraContainer.addIconsToTop then
           duration:SetPoint("CENTER", frame, "BOTTOM", 0, 5)
         else
-          duration:SetPoint("CENTER", frame, "BOTTOM", 0, 15)
+          duration:SetPoint("CENTER", frame, "BOTTOM", 0, 8)
         end
       elseif not DebuffFrame.AuraContainer.isHorizontal then
         if not DebuffFrame.AuraContainer.addIconsToRight then
@@ -99,24 +65,8 @@ function Debuffs:OnEnable()
       end
       duration:SetDrawLayer("OVERLAY")
 
-      if frame.customBorder == nil then
-        ButtonDefault(frame)
-      end
-
-      -- Set the color of the Debuff Border
-      local debuffType
-      if (child.buttonInfo) then
-        debuffType = child.buttonInfo.debuffType
-      end
-      if (frame.customBorder) then
-        local color
-        if (debuffType) then
-          color = DebuffColor[debuffType]
-        else
-          color = DebuffColor["none"]
-        end
-        frame.customBorder.texture:SetColorTexture(color.r, color.g, color.b, 1)
-      end
+      frame:SetSize(32, 32)
+      BlokyUI.msq:AddButton(frame)
     end
   end
 
@@ -128,6 +78,14 @@ function Debuffs:OnEnable()
     UpdateDebuffs()
   end)
 
-  hooksecurefunc(AuraButtonMixin, "UpdateDuration", UpdateDuration)
+  hooksecurefunc(AuraFrameMixin, "Update", function(self)
+    UpdateDebuffs()
+  end)
+
+  hooksecurefunc(C_EditMode, "OnEditModeExit", function()
+    UpdateDebuffs()
+  end)
+
+  -- hooksecurefunc(AuraButtonMixin, "UpdateDuration", UpdateDuration)
   -- hooksecurefunc(DebuffButtonMixin, "UpdateDuration", UpdateDuration)
 end

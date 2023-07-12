@@ -92,9 +92,9 @@ function Module:OnEnable()
 
 
 		-- prevent the chat scrollbar from showing
-		_G[chat].ScrollBar.Show = function() end
-		_G[chat].ScrollToBottomButton.Show = function() end
-		_G[chat .. "ThumbTexture"]:SetTexture(nil)
+		-- _G[chat].ScrollBar.Show = function() end
+		-- _G[chat].ScrollToBottomButton.Show = function() end
+		-- _G[chat .. "ThumbTexture"]:SetTexture(nil)
 
 		frame.skinned = true
 	end

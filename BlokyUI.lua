@@ -1,3 +1,4 @@
+local MSQ = LibStub("Masque", true)
 BlokyUI = LibStub("AceAddon-3.0"):NewAddon("BlokyUI", "AceEvent-3.0", "AceHook-3.0")
 
 function BlokyUI:OnInitialize()
@@ -30,4 +31,5 @@ function BlokyUI:OnInitialize()
       return BlokyUI.colors.enemy.r, BlokyUI.colors.enemy.g, BlokyUI.colors.enemy.b
     end
   end
+  self.msq = MSQ:Group("BlokyUI")
 end
